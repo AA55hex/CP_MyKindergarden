@@ -1,0 +1,26 @@
+﻿<mah:MetroWindow x:Class="MyKindergarden.Windows.ChildStat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyKindergarden.Windows"
+		xmlns:vm="clr-namespace:MyKindergarden.ViewModels"
+		xmlns:view="clr-namespace:MyKindergarden.Controls"
+        mc:Ignorable="d"
+		xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+		SizeToContent="WidthAndHeight"
+		Title="Журнал посещаемости"
+		ResizeMode="NoResize"
+		WindowStartupLocation="CenterScreen"
+		WindowStyle="ToolWindow"
+				 ShowInTaskbar="False">
+	<Window.Resources>
+		<DataTemplate DataType="{x:Type vm:DateRangeSelectorVM}">
+			<view:DateSelectorControl/>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:ChildJournalVM}">
+			<view:ChildJournalControl/>
+		</DataTemplate>
+	</Window.Resources>
+	<ContentPresenter Content="{Binding SelectedContext, UpdateSourceTrigger=PropertyChanged}"/>
+</mah:MetroWindow>

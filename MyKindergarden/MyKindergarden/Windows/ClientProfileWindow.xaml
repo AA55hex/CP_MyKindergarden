@@ -1,0 +1,49 @@
+﻿<mah:MetroWindow x:Class="MyKindergarden.Windows.ClientProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyKindergarden.Windows"
+        mc:Ignorable="d"
+		WindowStyle="ToolWindow"
+        Title="{Binding FIO}" 
+		xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+		ResizeMode="NoResize"
+		SizeToContent="WidthAndHeight"
+		WindowStartupLocation="CenterScreen"
+				 ShowInTaskbar="False">
+	<StackPanel MinWidth="300"
+				MaxWidth="350"
+				Width="auto"
+				Margin="10">
+		<StackPanel.Resources>
+			<Style TargetType="TextBlock" BasedOn="{StaticResource NameBoxStyle}"/>
+		</StackPanel.Resources>
+		<StackPanel Margin="0,0,0,10">
+			<TextBlock Text="{Binding Model.LastName, StringFormat=Фамилия:	{0}}"/>
+			<TextBlock Text="{Binding Model.FirstName, StringFormat=Имя:	{0}}"/>
+			<TextBlock Text="{Binding Model.MiddleName, StringFormat=Отчество:	{0}}"/>
+			<TextBlock Text="{Binding ActiveStatus, StringFormat=Состояние:	{0}}"/>
+		</StackPanel>
+		<StackPanel Grid.Row="1"
+					Margin="0,0,0,10"
+					Visibility="{Binding AdminDataStatus}">
+			<TextBlock Text="{Binding Model.Username, StringFormat=Логин:	{0}}"/>
+			<TextBlock Text="{Binding Model.Password, StringFormat=Пароль:	{0}}"/>
+		</StackPanel>
+		<DataGrid ItemsSource="{Binding Model.KinderGroups}"
+				  EnableRowVirtualization="True"
+				  AutoGenerateColumns="False"
+				  SelectionMode="Single"
+				  Height="150"
+				  IsReadOnly="True"
+				  Grid.Column="1"
+				  Grid.RowSpan="2">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Группы"
+									Binding="{Binding GroupName}"
+									Width="*"/>
+			</DataGrid.Columns>
+		</DataGrid>
+	</StackPanel>
+</mah:MetroWindow>

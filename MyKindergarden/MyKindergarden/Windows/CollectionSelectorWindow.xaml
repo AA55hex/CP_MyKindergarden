@@ -1,0 +1,81 @@
+﻿<mah:MetroWindow x:Class="MyKindergarden.Windows.CollectionSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyKindergarden.Windows"
+        mc:Ignorable="d"
+		
+		xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+		SizeToContent="WidthAndHeight"
+		ResizeMode="NoResize"
+		WindowStartupLocation="CenterScreen"
+		UseNoneWindowStyle="True"
+				 ShowInTaskbar="False">
+	<Grid MinHeight="350"
+		  MinWidth="750"
+		  Margin="10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="auto"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<DataGrid DataContext="{Binding Left}"
+				  ItemsSource="{Binding Collection}"
+				  SelectedItem="{Binding SelectedItem}"
+				  EnableRowVirtualization="True"
+				  SelectionMode="Single"
+				  IsReadOnly="True"
+				  Width="auto"
+				  Grid.RowSpan="2"/>
+		<DataGrid DataContext="{Binding Right}"
+				  ItemsSource="{Binding Collection}"
+				  SelectedItem="{Binding SelectedItem}"
+				  EnableRowVirtualization="True"
+				  SelectionMode="Single"
+				  Width="auto"
+				  IsReadOnly="True"
+				  Grid.Column="2"
+				  Grid.RowSpan="2"/>
+		<StackPanel Grid.Row="0"
+					Grid.Column="1"
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<Button Content="&lt;-"
+						Grid.Column="0"
+						HorizontalAlignment="Stretch"
+					Command="{Binding ToLeftCommand}"/>
+				<Button Content="->"
+						HorizontalAlignment="Stretch"
+						Grid.Column="1"
+					Command="{Binding ToRightCommand}"/>
+			</Grid>
+			<Button Content="Добавить все ->"
+					Command="{Binding AllToRightCommand}"/>
+			<Button Content="&lt;- Удалить все"
+					Command="{Binding AllToLeftCommand}"/>
+		</StackPanel>
+		<Grid Grid.Row="1"
+			  Grid.Column="1"
+			  VerticalAlignment="Bottom">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Button Content="Сохранить"
+					Command="{Binding AcceptCommand}"/>
+			<Button Content="Отмена"
+					Command="{Binding CancelCommand}"
+					Grid.Column="1"/>
+		</Grid>
+	</Grid>
+</mah:MetroWindow>

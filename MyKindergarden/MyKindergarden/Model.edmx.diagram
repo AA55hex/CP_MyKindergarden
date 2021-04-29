@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cef4956c598140018110f3411ce3a169" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="MyKindergardenModel.Child" Width="1.5" PointX="7.875" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyKindergardenModel.Client" Width="1.5" PointX="3.625" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyKindergardenModel.ClientType" Width="1.5" PointX="1.5" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyKindergardenModel.GroupType" Width="1.5" PointX="5.875" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyKindergardenModel.KinderGroup" Width="1.5" PointX="5.875" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyKindergardenModel.VisitDate" Width="1.5" PointX="10" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyKindergardenModel.VisitDateSupportTable" Width="1.5" PointX="3.625" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyKindergardenModel.VisitNote" Width="1.5" PointX="10" PointY="5.75" IsExpanded="true" />
+        <AssociationConnector Association="MyKindergardenModel.FK__Child__KinderGro__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="MyKindergardenModel.FK__VisitNote__Child__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="MyKindergardenModel.FK__Client__ClientTy__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="MyKindergardenModel.FK__KinderGro__Group__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="MyKindergardenModel.FK__VisitNote__Visit__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="MyKindergardenModel.TeacherGroup" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

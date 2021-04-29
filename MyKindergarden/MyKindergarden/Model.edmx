@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MyKindergardenModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="KinderGroup_Id" Type="int" />
+          <Property Name="VisitStart" Type="date" Nullable="false" />
+          <Property Name="VisitEnd" Type="date" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="ClientType_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClientType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KinderGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="GroupType_Id" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeacherGroup">
+          <Key>
+            <PropertyRef Name="Teacher_Id" />
+            <PropertyRef Name="KinderGroup_Id" />
+          </Key>
+          <Property Name="Teacher_Id" Type="int" Nullable="false" />
+          <Property Name="KinderGroup_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="IsVisitDate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitDateSupportTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bit" Nullable="false" />
+          <Property Name="LastUpdate" Type="date" />
+        </EntityType>
+        <EntityType Name="VisitNote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Child_Id" Type="int" Nullable="false" />
+          <Property Name="VisitDate_Id" Type="int" Nullable="false" />
+          <Property Name="Visited" Type="bit" />
+          <Property Name="Additional" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__Child__KinderGro__35BCFE0A">
+          <End Role="KinderGroup" Type="Self.KinderGroup" Multiplicity="0..1" />
+          <End Role="Child" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KinderGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Child">
+              <PropertyRef Name="KinderGroup_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client__ClientTy__2C3393D0">
+          <End Role="ClientType" Type="Self.ClientType" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="ClientType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KinderGro__Group__31EC6D26">
+          <End Role="GroupType" Type="Self.GroupType" Multiplicity="1" />
+          <End Role="KinderGroup" Type="Self.KinderGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KinderGroup">
+              <PropertyRef Name="GroupType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherGr__Kinde__398D8EEE">
+          <End Role="KinderGroup" Type="Self.KinderGroup" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeacherGroup" Type="Self.TeacherGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KinderGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeacherGroup">
+              <PropertyRef Name="KinderGroup_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherGr__Teach__38996AB5">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TeacherGroup" Type="Self.TeacherGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeacherGroup">
+              <PropertyRef Name="Teacher_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VisitNote__Child__4222D4EF">
+          <End Role="Child" Type="Self.Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VisitNote" Type="Self.VisitNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Child">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitNote">
+              <PropertyRef Name="Child_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VisitNote__Visit__4316F928">
+          <End Role="VisitDate" Type="Self.VisitDate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VisitNote" Type="Self.VisitNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitDate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitNote">
+              <PropertyRef Name="VisitDate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Insert_date" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="d" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Insert_dates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="d1" Type="date" Mode="In" />
+          <Parameter Name="d2" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Is_workday" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bit">
+          <Parameter Name="d" Type="date" Mode="In" />
+        </Function>
+        <Function Name="LastVisitDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="date" />
+        <Function Name="SelectDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="date">
+          <Parameter Name="d" Type="date" Mode="In" />
+          <Parameter Name="alt" Type="date" Mode="In" />
+        </Function>
+        <Function Name="UpdateVisitNoteDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище MyKindergardenModelContainer">
+          <EntitySet Name="Child" EntityType="Self.Child" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientType" EntityType="Self.ClientType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GroupType" EntityType="Self.GroupType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KinderGroup" EntityType="Self.KinderGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherGroup" EntityType="Self.TeacherGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitDate" EntityType="Self.VisitDate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitDateSupportTable" EntityType="Self.VisitDateSupportTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitNote" EntityType="Self.VisitNote" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Child__KinderGro__35BCFE0A" Association="Self.FK__Child__KinderGro__35BCFE0A">
+            <End Role="KinderGroup" EntitySet="KinderGroup" />
+            <End Role="Child" EntitySet="Child" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client__ClientTy__2C3393D0" Association="Self.FK__Client__ClientTy__2C3393D0">
+            <End Role="ClientType" EntitySet="ClientType" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KinderGro__Group__31EC6D26" Association="Self.FK__KinderGro__Group__31EC6D26">
+            <End Role="GroupType" EntitySet="GroupType" />
+            <End Role="KinderGroup" EntitySet="KinderGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherGr__Kinde__398D8EEE" Association="Self.FK__TeacherGr__Kinde__398D8EEE">
+            <End Role="KinderGroup" EntitySet="KinderGroup" />
+            <End Role="TeacherGroup" EntitySet="TeacherGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherGr__Teach__38996AB5" Association="Self.FK__TeacherGr__Teach__38996AB5">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="TeacherGroup" EntitySet="TeacherGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VisitNote__Child__4222D4EF" Association="Self.FK__VisitNote__Child__4222D4EF">
+            <End Role="Child" EntitySet="Child" />
+            <End Role="VisitNote" EntitySet="VisitNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VisitNote__Visit__4316F928" Association="Self.FK__VisitNote__Visit__4316F928">
+            <End Role="VisitDate" EntitySet="VisitDate" />
+            <End Role="VisitNote" EntitySet="VisitNote" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyKindergardenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="KinderGroup_Id" Type="Int32" />
+          <Property Name="VisitStart" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VisitEnd" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="KinderGroup" Relationship="Self.FK__Child__KinderGro__35BCFE0A" FromRole="Child" ToRole="KinderGroup" />
+          <NavigationProperty Name="VisitNotes" Relationship="Self.FK__VisitNote__Child__4222D4EF" FromRole="Child" ToRole="VisitNote" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="ClientType_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClientType" Relationship="Self.FK__Client__ClientTy__2C3393D0" FromRole="Client" ToRole="ClientType" />
+          <NavigationProperty Name="KinderGroups" Relationship="Self.TeacherGroup" FromRole="Client" ToRole="KinderGroup" />
+        </EntityType>
+        <EntityType Name="ClientType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK__Client__ClientTy__2C3393D0" FromRole="ClientType" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="GroupType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="KinderGroups" Relationship="Self.FK__KinderGro__Group__31EC6D26" FromRole="GroupType" ToRole="KinderGroup" />
+        </EntityType>
+        <EntityType Name="KinderGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GroupType_Id" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Children" Relationship="Self.FK__Child__KinderGro__35BCFE0A" FromRole="KinderGroup" ToRole="Child" />
+          <NavigationProperty Name="GroupType" Relationship="Self.FK__KinderGro__Group__31EC6D26" FromRole="KinderGroup" ToRole="GroupType" />
+          <NavigationProperty Name="Clients" Relationship="Self.TeacherGroup" FromRole="KinderGroup" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="VisitDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IsVisitDate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="VisitNotes" Relationship="Self.FK__VisitNote__Visit__4316F928" FromRole="VisitDate" ToRole="VisitNote" />
+        </EntityType>
+        <EntityType Name="VisitDateSupportTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Boolean" Nullable="false" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="VisitNote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Child_Id" Type="Int32" Nullable="false" />
+          <Property Name="VisitDate_Id" Type="Int32" Nullable="false" />
+          <Property Name="Visited" Type="Boolean" />
+          <Property Name="Additional" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Child" Relationship="Self.FK__VisitNote__Child__4222D4EF" FromRole="VisitNote" ToRole="Child" />
+          <NavigationProperty Name="VisitDate" Relationship="Self.FK__VisitNote__Visit__4316F928" FromRole="VisitNote" ToRole="VisitDate" />
+        </EntityType>
+        <Association Name="FK__Child__KinderGro__35BCFE0A">
+          <End Role="KinderGroup" Type="Self.KinderGroup" Multiplicity="0..1" />
+          <End Role="Child" Type="Self.Child" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KinderGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Child">
+              <PropertyRef Name="KinderGroup_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VisitNote__Child__4222D4EF">
+          <End Role="Child" Type="Self.Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VisitNote" Type="Self.VisitNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Child">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitNote">
+              <PropertyRef Name="Child_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Client__ClientTy__2C3393D0">
+          <End Role="ClientType" Type="Self.ClientType" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="ClientType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KinderGro__Group__31EC6D26">
+          <End Role="GroupType" Type="Self.GroupType" Multiplicity="1" />
+          <End Role="KinderGroup" Type="Self.KinderGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KinderGroup">
+              <PropertyRef Name="GroupType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VisitNote__Visit__4316F928">
+          <End Role="VisitDate" Type="Self.VisitDate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VisitNote" Type="Self.VisitNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitDate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VisitNote">
+              <PropertyRef Name="VisitDate_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TeacherGroup">
+          <End Role="KinderGroup" Type="Self.KinderGroup" Multiplicity="*" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="MyKindergardenEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Children" EntityType="Self.Child" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="ClientTypes" EntityType="Self.ClientType" />
+          <EntitySet Name="GroupTypes" EntityType="Self.GroupType" />
+          <EntitySet Name="KinderGroups" EntityType="Self.KinderGroup" />
+          <EntitySet Name="VisitDates" EntityType="Self.VisitDate" />
+          <EntitySet Name="VisitDateSupportTables" EntityType="Self.VisitDateSupportTable" />
+          <EntitySet Name="VisitNotes" EntityType="Self.VisitNote" />
+          <AssociationSet Name="FK__Child__KinderGro__35BCFE0A" Association="Self.FK__Child__KinderGro__35BCFE0A">
+            <End Role="KinderGroup" EntitySet="KinderGroups" />
+            <End Role="Child" EntitySet="Children" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VisitNote__Child__4222D4EF" Association="Self.FK__VisitNote__Child__4222D4EF">
+            <End Role="Child" EntitySet="Children" />
+            <End Role="VisitNote" EntitySet="VisitNotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Client__ClientTy__2C3393D0" Association="Self.FK__Client__ClientTy__2C3393D0">
+            <End Role="ClientType" EntitySet="ClientTypes" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KinderGro__Group__31EC6D26" Association="Self.FK__KinderGro__Group__31EC6D26">
+            <End Role="GroupType" EntitySet="GroupTypes" />
+            <End Role="KinderGroup" EntitySet="KinderGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VisitNote__Visit__4316F928" Association="Self.FK__VisitNote__Visit__4316F928">
+            <End Role="VisitDate" EntitySet="VisitDates" />
+            <End Role="VisitNote" EntitySet="VisitNotes" />
+          </AssociationSet>
+          <AssociationSet Name="TeacherGroup" Association="Self.TeacherGroup">
+            <End Role="KinderGroup" EntitySet="KinderGroups" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <FunctionImport Name="Insert_date">
+            <Parameter Name="d" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Insert_dates">
+            <Parameter Name="d1" Mode="In" Type="DateTime" />
+            <Parameter Name="d2" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateVisitNoteDates" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MyKindergardenModelContainer" CdmEntityContainer="MyKindergardenEntities">
+          <EntitySetMapping Name="Children">
+            <EntityTypeMapping TypeName="MyKindergardenModel.Child">
+              <MappingFragment StoreEntitySet="Child">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="KinderGroup_Id" ColumnName="KinderGroup_Id" />
+                <ScalarProperty Name="VisitStart" ColumnName="VisitStart" />
+                <ScalarProperty Name="VisitEnd" ColumnName="VisitEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="MyKindergardenModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ClientType_Id" ColumnName="ClientType_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientTypes">
+            <EntityTypeMapping TypeName="MyKindergardenModel.ClientType">
+              <MappingFragment StoreEntitySet="ClientType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupTypes">
+            <EntityTypeMapping TypeName="MyKindergardenModel.GroupType">
+              <MappingFragment StoreEntitySet="GroupType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KinderGroups">
+            <EntityTypeMapping TypeName="MyKindergardenModel.KinderGroup">
+              <MappingFragment StoreEntitySet="KinderGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupType_Id" ColumnName="GroupType_Id" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitDates">
+            <EntityTypeMapping TypeName="MyKindergardenModel.VisitDate">
+              <MappingFragment StoreEntitySet="VisitDate">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IsVisitDate" ColumnName="IsVisitDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitDateSupportTables">
+            <EntityTypeMapping TypeName="MyKindergardenModel.VisitDateSupportTable">
+              <MappingFragment StoreEntitySet="VisitDateSupportTable">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitNotes">
+            <EntityTypeMapping TypeName="MyKindergardenModel.VisitNote">
+              <MappingFragment StoreEntitySet="VisitNote">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Child_Id" ColumnName="Child_Id" />
+                <ScalarProperty Name="VisitDate_Id" ColumnName="VisitDate_Id" />
+                <ScalarProperty Name="Visited" ColumnName="Visited" />
+                <ScalarProperty Name="Additional" ColumnName="Additional" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TeacherGroup" TypeName="MyKindergardenModel.TeacherGroup" StoreEntitySet="TeacherGroup">
+            <EndProperty Name="KinderGroup">
+              <ScalarProperty Name="Id" ColumnName="KinderGroup_Id" />
+            </EndProperty>
+            <EndProperty Name="Client">
+              <ScalarProperty Name="Id" ColumnName="Teacher_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="Insert_date" FunctionName="Хранилище MyKindergardenModel.Insert_date" />
+          <FunctionImportMapping FunctionImportName="Insert_dates" FunctionName="Хранилище MyKindergardenModel.Insert_dates" />
+          <FunctionImportMapping FunctionImportName="UpdateVisitNoteDates" FunctionName="Хранилище MyKindergardenModel.UpdateVisitNoteDates" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

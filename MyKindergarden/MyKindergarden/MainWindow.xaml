@@ -1,0 +1,23 @@
+﻿<mah:MetroWindow x:Class="MyKindergarden.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyKindergarden"
+		xmlns:vm="clr-namespace:MyKindergarden.ViewModels"
+		xmlns:view="clr-namespace:MyKindergarden.Controls"
+		xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="Мой детский сад"
+		WindowState="Maximized">
+	<Window.Resources>
+		<DataTemplate DataType="{x:Type vm:ClientLogInVM}">
+			<view:LogInControl/>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:TabSwapperVM}">
+			<view:Main/>
+		</DataTemplate>
+	</Window.Resources>
+	<ContentPresenter Content="{Binding SelectedContext}"/>
+</mah:MetroWindow>

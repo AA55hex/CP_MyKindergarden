@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="MyKindergarden.Controls.LogInControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyKindergarden.Controls"
+			 xmlns:vm="clr-namespace:MyKindergarden.ViewModels"
+			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+			 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+			 MaxHeight="250"
+			 MaxWidth="250"
+             d:DesignHeight="250" d:DesignWidth="250">
+	<UserControl.Resources>
+		<Style TargetType="TextBlock" BasedOn="{StaticResource NameBoxStyle}">
+			<Setter Property="FontSize" Value="12"/>
+		</Style>
+	</UserControl.Resources>
+	<Border BorderBrush="{StaticResource MahApps.Brushes.AccentBase}"
+			BorderThickness="2"
+			CornerRadius="20"
+			>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="2"/>
+				<RowDefinition/>
+				<RowDefinition Height="auto"/>
+			</Grid.RowDefinitions>
+			<Border Grid.Row="1" Background="{StaticResource MahApps.Brushes.AccentBase}"/>
+			<TextBlock Text="Авторизация"
+					   Style="{StaticResource HeadBoxStyle}"
+					   HorizontalAlignment="Center"
+					  FontSize="16"/>
+			<StackPanel Grid.Row="2"
+						Margin="5"
+						VerticalAlignment="Center">
+				<TextBlock Text="Логин"/>
+				<TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+						 Name="loginBox"/>
+				<TextBlock Text="Пароль"/>
+				<TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+			</StackPanel>
+			<Button Grid.Row="3"
+				Command="{Binding LogInCommand}"
+				Content="Войти"
+				Height="45"
+				Margin="10"/>
+		</Grid>
+	</Border>
+</UserControl>
